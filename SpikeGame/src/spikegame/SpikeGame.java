@@ -1,7 +1,7 @@
-
 package spikegame;
-
-import javalib.appletworld.World;
+import net.slashie.libjcsi.wswing.WSwingConsoleInterface;
+import net.slashie.libjcsi.ConsoleSystemInterface;
+import net.slashie.libjcsi.CharKey;
 
 
 /**

@@ -1,7 +1,8 @@
 
 package spikegame;
-import java.awt.Color;
-import java.awt.*;
+import net.slashie.libjcsi.wswing.WSwingConsoleInterface;
+import net.slashie.libjcsi.ConsoleSystemInterface;
+import net.slashie.libjcsi.CharKey;
 /**
  *
  * @author kathrynhodge
