@@ -1,1 +1,0 @@
-java -cp libjcsi.jar;lib\jcurses-x.jar libjcsi.jar net.slashie.libjcsi.examples.JCursesExample

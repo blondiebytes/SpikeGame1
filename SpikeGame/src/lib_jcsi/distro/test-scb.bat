@@ -1,1 +1,0 @@
-java -cp libjcsi.jar net.slashie.libjcsi.examples.SCBExample

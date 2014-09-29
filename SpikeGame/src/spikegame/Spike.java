@@ -1,5 +1,7 @@
 
 package spikegame;
+
+
 import net.slashie.libjcsi.wswing.WSwingConsoleInterface;
 import net.slashie.libjcsi.ConsoleSystemInterface;
 import net.slashie.libjcsi.CharKey;
