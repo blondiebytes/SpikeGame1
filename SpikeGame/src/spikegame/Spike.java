@@ -1,7 +1,5 @@
 
 package spikegame;
-
-
 import net.slashie.libjcsi.wswing.WSwingConsoleInterface;
 import net.slashie.libjcsi.ConsoleSystemInterface;
 import net.slashie.libjcsi.CharKey;
@@ -12,20 +10,20 @@ import net.slashie.libjcsi.CharKey;
 
 public class Spike {
     
-      static final int MAXH = 100;
-    static final int MAXW = 100;
+    static final int MAXH = 20;
+    static final int MAXW = 78;
     static final int MAX = MAXW;
-    static final int height = 0;
+    int height = 0;
     int width;
     int deltaWidth;
     
     Spike() {
-        this(MAX, -1);
+        this(MAX/2, -1);
     }
     
-    private Spike (int width, int deltawidth) {
+    private Spike (int width, int deltaWidth) {
         this.width = width;
-        this.deltaWidth = width;
+        this.deltaWidth = deltaWidth;
     }
     
     public Spike tick() {
@@ -41,16 +39,16 @@ public class Spike {
     
     public Spike react (CharKey k) {
         if (k.isRightArrow()) {
-            return new Spike (width, deltaWidth);
+            return new Spike (width, Math.abs(deltaWidth)).tick();
         } if (k.isLeftArrow()) {
-            return new Spike (width, -deltaWidth);
+            return new Spike (width, -Math.abs(deltaWidth)).tick();
         } else {
             return this;
         }
     }
     
     public void draw (ConsoleSystemInterface s) {
-        String disp = "\\_/";
+        String disp = "\\/";
         s.print(width, height, disp, s.WHITE);
         
     }

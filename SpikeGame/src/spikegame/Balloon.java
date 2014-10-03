@@ -2,13 +2,13 @@
 package spikegame;
 import net.slashie.libjcsi.wswing.WSwingConsoleInterface;
 import net.slashie.libjcsi.ConsoleSystemInterface;
-import net.slashie.libjcsi.CharKey;
+ import net.slashie.libjcsi.CharKey;
 import java.util.Random;
 
 
 public class Balloon {
-    static final int MAXH = 0;
-    static final int MAXW = 100;
+    static final int MAXH = 25;
+    static final int MAXW = 79;
     static final int MAX = MAXH;
     // Make width random later
     int width = 30;
@@ -21,11 +21,11 @@ public class Balloon {
     
     private Balloon (int height, int deltaHeight, int width) {
         this.height = height;
-        this.deltaHeight = height;
+        this.deltaHeight = deltaHeight;
         // Using Sentinal w = -500
         if (width == -500) {
             Random random = new Random();
-            this.width = random.nextInt() % 100;
+            this.width = Math.abs(random.nextInt()) % MAXW;
         } else 
         {
             this.width = width;
