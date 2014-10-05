@@ -86,8 +86,9 @@ public class SpikeGame {
             for (Balloon b : balloonDataStruct) {
                collision(spike, b, livesLabel, scoreLabel);
                if (b.height == 55) {
-                   balloonDataStruct.remove(b);
-                   System.out.println("I removed a balloon!");
+                   Boolean bool = balloonDataStruct.remove(b);
+                   // it removes the balloon, but still crashing
+                   System.out.println("I removed a balloon! : " + bool);
                }
             }
           }
