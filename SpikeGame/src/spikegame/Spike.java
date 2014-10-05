@@ -1,6 +1,5 @@
 
 package spikegame;
-import net.slashie.libjcsi.wswing.WSwingConsoleInterface;
 import net.slashie.libjcsi.ConsoleSystemInterface;
 import net.slashie.libjcsi.CharKey;
 /**
@@ -45,6 +44,12 @@ public class Spike {
         } else {
             return this;
         }
+    }
+    
+    public boolean isEqualTo(Spike s) {
+        return (this.deltaWidth == s.deltaWidth) 
+                && (this.height == s.height) 
+                && (this.width == s.width);
     }
     
     public void draw (ConsoleSystemInterface s) {

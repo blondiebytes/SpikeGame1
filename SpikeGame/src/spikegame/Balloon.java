@@ -1,8 +1,7 @@
 
 package spikegame;
-import net.slashie.libjcsi.wswing.WSwingConsoleInterface;
 import net.slashie.libjcsi.ConsoleSystemInterface;
- import net.slashie.libjcsi.CharKey;
+import net.slashie.libjcsi.CharKey;
 import java.util.Random;
 
 
@@ -33,14 +32,7 @@ public class Balloon {
     }
     
     public Balloon tick() {
-        int newHeight = height + deltaHeight;
-        if (newHeight < 0) {
-            return new Balloon(0, deltaHeight, width);
-        } else if (newHeight > MAX) {
-            return new Balloon(MAX, -deltaHeight, width);
-        } else {
-            return new Balloon(newHeight, deltaHeight, width);
-        }
+        return new Balloon(this.height--, this.deltaHeight, this.width);
     }
     
     public Balloon react (CharKey k) {
