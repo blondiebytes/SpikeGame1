@@ -54,7 +54,7 @@ public class Spike {
     
     public void draw (ConsoleSystemInterface s) {
         String disp = "\\/";
-        s.print(width, height, disp, s.WHITE);
+        s.print(width, height, disp, s.RED);
         
     }
     

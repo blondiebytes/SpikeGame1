@@ -42,7 +42,7 @@ public class Balloon {
     
     public void draw (ConsoleSystemInterface s) {
         String disp = "()";
-        s.print(width, height, disp, s.WHITE);
+        s.print(width, height, disp, s.CYAN);
         
     }
     
