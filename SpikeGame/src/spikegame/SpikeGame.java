@@ -77,9 +77,10 @@ public class SpikeGame {
                 balloonTurnCount++;
                 s.refresh();
                 CharKey k = s.inkey();
+                Spike oldSpike = spike;
                 spike = spike.react(k);
                 // If the spike moves, balloons move
-                if (!spike.isEqualTo(spike.react(k))) {
+                if (!spike.isEqualTo(oldSpike)) {
                     for (Balloon b : balloonDataStruct) {
                         b = b.tick();
                     }
