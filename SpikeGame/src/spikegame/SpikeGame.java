@@ -46,9 +46,15 @@ public class SpikeGame {
 
         while (true) {
             s.cls();
-            s.print(1, 0, "Press something to start the game!", s.GREEN);
+            s.print(2, 1, "Press the Up arrow to start the game!", s.CYAN);
             s.refresh();
-            s.inkey();
+            CharKey t = s.inkey();
+            while (!t.isUpArrow()) {
+                CharKey a = s.inkey();
+                if (a.isUpArrow()) {
+                    break;
+                }
+            }
 
             // Creating a new data 
             ArrayList<Balloon> balloonDataStruct = new ArrayList();
@@ -95,9 +101,15 @@ public class SpikeGame {
                 }
             }
             s.cls();
-            s.print(1, 0, "GAME OVER! Press any key to start another game!", s.RED);
+            s.print(2, 1, "GAME OVER! Press the Down arrow to start another game!", s.RED);
             s.refresh();
-            s.inkey();
+            CharKey r = s.inkey();
+            while (!r.isDownArrow()) {
+                CharKey a = s.inkey();
+                if (a.isDownArrow()) {
+                    break;
+                }
+            }
         }
     }
 }

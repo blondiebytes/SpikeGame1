@@ -9,7 +9,7 @@ public class LivesLabel {
     int lives;
     
     public LivesLabel() {
-        lives = 3;
+        lives = 2;
     }
     
     public void subtractLife() {
