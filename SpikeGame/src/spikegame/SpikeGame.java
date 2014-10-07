@@ -49,7 +49,6 @@ public class SpikeGame {
         if ((spike.width == b.width) && (spike.height == b.height)) {
             // Spike hits the bubble
             newLives = livesLabel.subtractLife();
-            newScoreLabel = scoreLabel.subtractScore();
             b.height = sentinalH;
             //  System.out.println("I HAVE NOT COLLIDED");
             if (newLives.gameOver()) {
@@ -91,7 +90,6 @@ public class SpikeGame {
        
         // If spike moves, balloons move
         for (Balloon b: balloonDataStruct) {
-            System.out.println("!");
             Balloon nb = b;
             if (!newSpike.isEqualTo(spike)) {
                 nb = b.tick();
@@ -114,8 +112,51 @@ public class SpikeGame {
         
     
     
-     public void verifyInvariants(SpikeGame oldSpikeGame, SpikeGame newSpikeGame) {
-        // TESTING CODE HERE!!!!
+     public void verifyInvariants(SpikeGame oldSpikeGame, SpikeGame newSpikeGame, CharKey rnb) {
+         
+         // NewGame -> Testing Given Constructor
+         // -------------------------------
+         // A new game should start with:
+         // A Spike positioned at the top middle of the screen
+         // An empty Array<Balloon List>
+         // 2 Lives
+         // 0 Score
+         // A boolean which says the game is not over 
+         
+         
+         // Testing gameOver & Lives
+         // ---------------------------------
+         // If the game is over, then lives should equal 0.
+         // If the game is not over, then lives should be either 2 or 1. 
+         
+           // Testing Score
+         // ---------------------------------
+         // In every game, the score should never be negative
+      
+         // Testing React & Tick with spike & balloons
+         // ---------------------------------
+        // Button pressed = right; then spike moves over to the right (width++);
+         // also balloons should all move up in this case
+         
+         //Button pressed = left; then spike moves over to the left (width--);
+         // also balloons should all move up in this case
+         
+         // Button pressed = anything else; spike doesn't move (width = width); 
+         // balloons should not move in this case
+         
+         
+         //Testing Collision & the iteration
+         // ---------------------------------
+         //Iterate through balloons -> if an old balloon has a height of 1, then it is
+         // about to hit the spike or not hit the spike. Either way it disappears in the
+         // next turn, so we should make sure it was removed. 
+         
+         // One of two things should happen everytime there is a collision
+         // If the balloon hits the spike, then it should have one less life
+         // If the balloon does not hit the spike, then its score should increase
+         
+
+         
     }
      
      public CharKey randomButton() {

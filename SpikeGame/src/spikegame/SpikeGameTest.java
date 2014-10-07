@@ -31,8 +31,9 @@ public class SpikeGameTest {
             
             // Keep drawing, reacting, and ticking until the game is over
             while (!spikeGame.gameOver) {
-                  SpikeGame newSpikeGame = spikeGame.reactAndTick(spikeGame.randomButton());
-                  spikeGame.verifyInvariants(spikeGame, newSpikeGame);
+                  CharKey rndB = spikeGame.randomButton();
+                  SpikeGame newSpikeGame = spikeGame.reactAndTick(rndB);
+                  spikeGame.verifyInvariants(spikeGame, newSpikeGame, rndB);
                   spikeGame = newSpikeGame;
                   System.out.println("I reacted to thingz");
             }
@@ -57,21 +58,6 @@ public class SpikeGameTest {
              }
     }   
 }
-
-
-
-
-    //    public static void main(String[] args) {
-//      SpikeGame spikeGame = new SpikeGame();
-//        for (int turn = 0; turn < 100: turn++) {
-//         spikeGame = spikeGame.randomButton().tick();
-//         spikeGame.verifyInvariants(); 
-//    }
-//    }
-//
-//}
-         
-         
          
          
          
