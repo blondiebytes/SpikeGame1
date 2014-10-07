@@ -12,8 +12,12 @@ public class LivesLabel {
         lives = 2;
     }
     
-    public void subtractLife() {
-        this.lives--;
+    public LivesLabel(int lives) {
+        this.lives = lives;
+    }
+    
+    public LivesLabel subtractLife() {
+        return new LivesLabel(this.lives - 1);
     }
     
     public boolean gameOver() {

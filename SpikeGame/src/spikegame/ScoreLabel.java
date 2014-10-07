@@ -11,12 +11,16 @@ public class ScoreLabel {
         score = 0;
     }
     
-    public void addScore() {
-        this.score = this.score + 5;
+    public ScoreLabel(int score) {
+        this.score = score;
     }
     
-     public void subtractScore() {
-        this.score = this.score - 5;
+    public ScoreLabel addScore() {
+        return new ScoreLabel(this.score + 5);
+    }
+    
+     public ScoreLabel subtractScore() {
+        return new ScoreLabel(this.score - 5);
     }
     
     

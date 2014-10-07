@@ -21,9 +21,7 @@ public class SpikeGameRun {
             s.print(2, 1, "Press the Up arrow to start the game!", s.CYAN);
             s.refresh();
             // Check key to start the game
-            spikeGame.checkCharKeyUp(s.inkey(), s);
-            
-            while ( spikeGame.shouldUnpause(s.inkey()) ) { }
+            while (spikeGame.shouldStart(s.inkey())) { }
             
             // Keep drawing, reacting, and ticking until the game is over
             while (!spikeGame.gameOver) {
@@ -38,7 +36,7 @@ public class SpikeGameRun {
             s.print(2, 1, "GAME OVER! Press the Down arrow to start another game!", s.RED);
             s.refresh();
             // Check key to restart the game
-            spikeGame.checkCharKeyDown(s.inkey(), s);
+             while (spikeGame.shouldRestart(s.inkey())) { }
              }
     }   
 }

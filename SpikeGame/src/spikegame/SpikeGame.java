@@ -16,25 +16,26 @@ public class SpikeGame {
     LivesLabel livesLabel = new LivesLabel();
     ScoreLabel scoreLabel = new ScoreLabel();
     
-   public void checkCharKeyUp(CharKey t, ConsoleSystemInterface s) {
-         while (!t.isUpArrow()) {
-                CharKey a = s.inkey();
-                if (a.isUpArrow()) {
-                    return;
-                }
-        }
+    public SpikeGame() {
+        
     }
+    
+    public SpikeGame(Spike spike, ArrayList<Balloon> balloons, 
+            LivesLabel lives, ScoreLabel score, boolean gameOver) {
+        this.spike = spike;
+        this.balloonDataStruct = balloons;
+        this.gameOver = false;
+        this.livesLabel = lives;
+        this.scoreLabel = score;
+    }
+    
+   public boolean shouldStart(CharKey t) {
+       return t.isUpArrow();
+   }
    
-   public void checkCharKeyUpTest(CharKey t, ConsoleSystemInterface s) {
-         while (!t.isUpArrow()) {
-                CharKey a = this.randomButton();
-                if (a.isUpArrow()) {
-                    System.out.println("The random button is Up and now "
-                            + "we start the game!");
-                    return;
-                }
-        }
-    }
+   public boolean shouldRestart(CharKey t) {
+       return t.isDownArrow();
+   }
    
    public void checkCharKeyDown(CharKey t, ConsoleSystemInterface s) {
        while (!t.isDownArrow()) {
@@ -57,24 +58,32 @@ public class SpikeGame {
     }
    
 
-    public void collision(Balloon b) {
+    public SpikeGame collision(Balloon b) {
+        Spike newSpike = spike;
+        ArrayList<Balloon> newBalloonDataStruct = new ArrayList();
+        LivesLabel newLives = livesLabel;
+        ScoreLabel newScoreLabel = scoreLabel;
+        boolean newGameOver = gameOver; 
+        
         if ((spike.width == b.width) && (spike.height == b.height)) {
             // Spike hits the bubble
-            livesLabel.subtractLife();
+            newLives = livesLabel.subtractLife();
             scoreLabel.subtractScore();
             b.height = sentinalH;
             //  System.out.println("I HAVE NOT COLLIDED");
-            if (livesLabel.gameOver()) {
+            if (newLives.gameOver()) {
                 // Change gameOver to true;
-                gameOver = true;
+                newGameOver = true;
             }
         }
 
         if ((spike.width != b.width) && (spike.height == b.height)) {
             // spike misses the bubble
-            scoreLabel.addScore();
+            newScoreLabel = scoreLabel.addScore();
             b.height = sentinalH;
         }
+        
+        return new SpikeGame(newSpike, newBalloonDataStruct, newLives, newScoreLabel, newGameOver);
     }
     
     public void draw(ConsoleSystemInterface s) {
@@ -90,14 +99,14 @@ public class SpikeGame {
     }
     
     
-    public void reactAndTick(CharKey k, ConsoleSystemInterface s) {
-
-        Spike oldSpike = spike;
+    public SpikeGame reactAndTick(CharKey k, ConsoleSystemInterface s) {
         Spike newSpike = spike.react(k);
         // If spike moves, balloons move
-        if (!NewSpike.isEqualTo(spike)) {
+        
+       ArrayList<Balloon> newBalloonDataStruct = new ArrayList();
+        if (!newSpike.isEqualTo(spike)) {
             for (Balloon b: balloonDataStruct) {
-                newArray.add(b.tick());
+                newBalloonDataStruct.add(b.tick());
              }
         }
         
@@ -107,9 +116,8 @@ public class SpikeGame {
                     if (b.height == sentinalH) {
                         it.remove();
                     }
-             }
-        
-        return new SpikeGame( newSpike, newBalloons );
+        }
+        return new SpikeGame( newSpike, newBalloonDataStruct);
     }
         
     
@@ -135,8 +143,5 @@ public class SpikeGame {
          }
      }
 
-    void checkCharKeyDownTest(CharKey randomButton, ConsoleSystemInterface s) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
      
 }
