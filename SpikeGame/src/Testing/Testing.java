@@ -1,17 +1,17 @@
-package Testing;
-import spikegame.SpikeGame;
-public class Testing {
-    
-    
-    public static void main(String[] args) {
-      SpikeGame spikeGame = new SpikeGame();
-        for (int turn = 0; turn < 100: turn++) {
-         spikeGame = spikeGame.(randomButton()).tick();
-         spikeGame.verifyInvariants(); 
-    }
-    }
-
-}
+//package Testing;
+//import spikegame.SpikeGame;
+//public class Testing {
+//    
+//    
+//    public static void main(String[] args) {
+//      SpikeGame spikeGame = new SpikeGame();
+//        for (int turn = 0; turn < 100: turn++) {
+//         spikeGame = spikeGame.randomButton().tick();
+//         spikeGame.verifyInvariants(); 
+//    }
+//    }
+//
+//}
          
          
          
