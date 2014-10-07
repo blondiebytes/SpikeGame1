@@ -129,10 +129,12 @@ public class SpikeGame {
          // If the game is over, then lives should equal 0.
          // If the game is not over, then lives should be either 2 or 1. 
          
+         
            // Testing Score
          // ---------------------------------
          // In every game, the score should never be negative
       
+         
          // Testing React & Tick with spike & balloons
          // ---------------------------------
         // Button pressed = right; then spike moves over to the right (width++);
@@ -151,7 +153,7 @@ public class SpikeGame {
          // about to hit the spike or not hit the spike. Either way it disappears in the
          // next turn, so we should make sure it was removed. 
          
-         // One of two things should happen everytime there is a collision
+         // One of two things should happen everytime there is a collision:
          // If the balloon hits the spike, then it should have one less life
          // If the balloon does not hit the spike, then its score should increase
          
