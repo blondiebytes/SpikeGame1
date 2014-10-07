@@ -39,6 +39,14 @@ public class SpikeGame {
             b.height = sentinalH;
         }
     }
+    
+     public void verifyInvariants() {
+        
+    }
+     
+     public void randomButton() {
+         // calls tick and returns new SpikeGame
+     }
 
     public static void main(String[] args) {
 
