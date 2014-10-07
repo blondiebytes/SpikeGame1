@@ -21,13 +21,13 @@ public class SpikeGameRun {
             s.print(2, 1, "Press the Up arrow to start the game!", s.CYAN);
             s.refresh();
             // Check key to start the game
-            while (spikeGame.shouldStart(s.inkey())) { }
+            while (!spikeGame.shouldStart(s.inkey())) { }
             
             // Keep drawing, reacting, and ticking until the game is over
             while (!spikeGame.gameOver) {
                   spikeGame.draw(s);
                   System.out.println("I drew thingz");
-                  SpikeGame newSpikeGame = spikeGame.reactAndTick(s.inkey(), s);
+                  SpikeGame newSpikeGame = spikeGame.reactAndTick(s.inkey());
                   spikeGame = newSpikeGame;
                   System.out.println("I reacted to thingz");
             }
@@ -36,7 +36,7 @@ public class SpikeGameRun {
             s.print(2, 1, "GAME OVER! Press the Down arrow to start another game!", s.RED);
             s.refresh();
             // Check key to restart the game
-             while (spikeGame.shouldRestart(s.inkey())) { }
+             while (!spikeGame.shouldRestart(s.inkey())) { }
              }
     }   
 }

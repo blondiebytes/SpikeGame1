@@ -8,41 +8,52 @@ import net.slashie.libjcsi.wswing.WSwingConsoleInterface;
 public class SpikeGameTest {
     
   public static void main(String[] args) {
-      //ConsoleSystemInterface s = new WSwingConsoleInterface("Spike by Kathryn", true);
         while (true) {
             // Create a new SpikeGame
             SpikeGame spikeGame = new SpikeGame(); 
-            // Set up initial view
-            s.cls();
-            s.print(2, 1, "Press the Up arrow to start the game!", s.CYAN);
-            s.refresh();
-            // Check key to start the game
-            spikeGame.checkCharKeyUpTest(spikeGame.randomButton(), s);
-            
-             for ( 10 tests ) {
+           
+            // Testing Key to Start the Game!
+             for (int turn = 0; turn < 50; turn++) {
                  CharKey rk = spikeGame.randomButton();
-                 if ( rk isn't up arrow ') {
-                 spikeGame.shouldUnpause(rk) == false
-                         }
+                 if (rk.isUpArrow()) {
+                       System.out.println("Our random button is the Up "
+                               + "Arrow so the "
+                               + "game should start and " 
+                               + spikeGame.shouldStart(rk) + " == true");
+                         } else {
+                     System.out.println("Our random button is not the Up Arrow"
+                             + "so the game should not start and "
+                             + spikeGame.shouldStart(rk) + " == false");
+                 }
              }
-             spikeGame.shouldUnpause(UpArrow) == true
                  
 
             
             // Keep drawing, reacting, and ticking until the game is over
             while (!spikeGame.gameOver) {
-                  spikeGame.draw(s);
-                  System.out.println("I drew thingz");
-                  spikeGame.reactAndTick(spikeGame.randomButton(), s);
-                  spikeGame.verifyInvariants();
+                  SpikeGame newSpikeGame = spikeGame.reactAndTick(spikeGame.randomButton());
+                  spikeGame.verifyInvariants(spikeGame, newSpikeGame);
+                  spikeGame = newSpikeGame;
                   System.out.println("I reacted to thingz");
             }
-            // Set up final view
-            s.cls();
-            s.print(2, 1, "GAME OVER! Press the Down arrow to start another game!", s.RED);
-            s.refresh();
-            // Check key to restart the game
-            spikeGame.checkCharKeyDownTest(spikeGame.randomButton(), s);
+           
+            
+            
+            // Testing Key to Restart the Game!
+             for (int turn = 0; turn < 50; turn++) {
+                 CharKey rk = spikeGame.randomButton();
+                 if (rk.isDownArrow()) {
+                       System.out.println("Our random button is the Up "
+                               + "Arrow so the "
+                               + "game should start and " 
+                               + spikeGame.shouldRestart(rk) + " == true");
+                         } else {
+                     System.out.println("Our random button is not the Up Arrow"
+                             + "so the game should not start and "
+                             + spikeGame.shouldRestart(rk) + "== false");
+                 }
+             }
+             
              }
     }   
 }
@@ -50,7 +61,6 @@ public class SpikeGameTest {
 
 
 
-// new CharKey(CharKey.UARROW);
     //    public static void main(String[] args) {
 //      SpikeGame spikeGame = new SpikeGame();
 //        for (int turn = 0; turn < 100: turn++) {

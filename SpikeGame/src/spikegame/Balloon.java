@@ -30,7 +30,7 @@ public class Balloon {
     }
     
     public Balloon tick() {
-        return new Balloon(this.height--, this.width);
+        return new Balloon(this.height - 1, this.width);
     }
     
     public Balloon react (CharKey k) {
@@ -40,11 +40,8 @@ public class Balloon {
     
     public void draw (ConsoleSystemInterface s) {
         String disp = "()";
-        s.print(width, height, disp, s.CYAN);
-        
-    }
-    
-    public static void test() {
+        System.out.println("() at " + width + " " + height);
+            s.print(width, height, disp, s.CYAN);
         
     }
      

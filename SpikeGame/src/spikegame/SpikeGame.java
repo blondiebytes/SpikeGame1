@@ -24,7 +24,7 @@ public class SpikeGame {
             LivesLabel lives, ScoreLabel score, boolean gameOver) {
         this.spike = spike;
         this.balloonDataStruct = balloons;
-        this.gameOver = false;
+        this.gameOver = gameOver;
         this.livesLabel = lives;
         this.scoreLabel = score;
     }
@@ -37,30 +37,11 @@ public class SpikeGame {
        return t.isDownArrow();
    }
    
-   public void checkCharKeyDown(CharKey t, ConsoleSystemInterface s) {
-       while (!t.isDownArrow()) {
-                CharKey a = s.inkey();
-                if (a.isDownArrow()) {
-                    return;
-                }
-        }
-   }
-   
-   public void checkCharKeyUpDownTest(CharKey t, ConsoleSystemInterface s) {
-         while (!t.isUpArrow()) {
-                CharKey a = this.randomButton();
-                if (a.isUpArrow()) {
-                     System.out.println("The random button is Down and now "
-                            + "we restart the session!");
-                    return;
-                }
-        }
-    }
    
 
     public SpikeGame collision(Balloon b) {
         Spike newSpike = spike;
-        ArrayList<Balloon> newBalloonDataStruct = new ArrayList();
+        ArrayList<Balloon> newBalloonDataStruct = balloonDataStruct;
         LivesLabel newLives = livesLabel;
         ScoreLabel newScoreLabel = scoreLabel;
         boolean newGameOver = gameOver; 
@@ -68,7 +49,7 @@ public class SpikeGame {
         if ((spike.width == b.width) && (spike.height == b.height)) {
             // Spike hits the bubble
             newLives = livesLabel.subtractLife();
-            scoreLabel.subtractScore();
+            newScoreLabel = scoreLabel.subtractScore();
             b.height = sentinalH;
             //  System.out.println("I HAVE NOT COLLIDED");
             if (newLives.gameOver()) {
@@ -76,7 +57,6 @@ public class SpikeGame {
                 newGameOver = true;
             }
         }
-
         if ((spike.width != b.width) && (spike.height == b.height)) {
             // spike misses the bubble
             newScoreLabel = scoreLabel.addScore();
@@ -88,9 +68,10 @@ public class SpikeGame {
     
     public void draw(ConsoleSystemInterface s) {
                 s.cls();
-                balloonDataStruct.add(new Balloon());
                 spike.draw(s);
                 for (Balloon b : balloonDataStruct) {
+                    System.out.println("?");
+            
                     b.draw(s);
                 }
                 livesLabel.draw(s);
@@ -99,31 +80,42 @@ public class SpikeGame {
     }
     
     
-    public SpikeGame reactAndTick(CharKey k, ConsoleSystemInterface s) {
-        Spike newSpike = spike.react(k);
-        // If spike moves, balloons move
-        
+    public SpikeGame reactAndTick(CharKey k) {
+       Spike newSpike = spike.react(k);
        ArrayList<Balloon> newBalloonDataStruct = new ArrayList();
-        if (!newSpike.isEqualTo(spike)) {
-            for (Balloon b: balloonDataStruct) {
-                newBalloonDataStruct.add(b.tick());
+       LivesLabel newLivesLabel = livesLabel;
+       ScoreLabel newScoreLabel = scoreLabel;
+       boolean newGameOver = gameOver;
+
+       newBalloonDataStruct.add(new Balloon());
+       
+        // If spike moves, balloons move
+        for (Balloon b: balloonDataStruct) {
+            System.out.println("!");
+            Balloon nb = b;
+            if (!newSpike.isEqualTo(spike)) {
+                nb = b.tick();
              }
+                newBalloonDataStruct.add(nb);
         }
         
-        for (Iterator<Balloon> it = balloonDataStruct.iterator(); it.hasNext();) {
+        for (Iterator<Balloon> it = newBalloonDataStruct.iterator(); it.hasNext();) {
                     Balloon b = it.next();
-                    this.collision(b);
+                    SpikeGame newSpikeGameLivesScoreGameOver = this.collision(b);
+                    newSpikeGameLivesScoreGameOver.livesLabel = newLivesLabel;
+                    newSpikeGameLivesScoreGameOver.scoreLabel = newScoreLabel;
+                    newSpikeGameLivesScoreGameOver.gameOver = newGameOver;
                     if (b.height == sentinalH) {
                         it.remove();
                     }
         }
-        return new SpikeGame( newSpike, newBalloonDataStruct);
+        return new SpikeGame(newSpike, newBalloonDataStruct, newLivesLabel, newScoreLabel, newGameOver);
     }
         
     
     
-     public void verifyInvariants() {
-        
+     public void verifyInvariants(SpikeGame oldSpikeGame, SpikeGame newSpikeGame) {
+        // TESTING CODE HERE!!!!
     }
      
      public CharKey randomButton() {

@@ -58,9 +58,6 @@ public class Spike {
         
     }
     
-    public static void test() {
-        
-    }
     
     }
 
