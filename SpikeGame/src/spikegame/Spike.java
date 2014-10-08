@@ -11,13 +11,13 @@ public class Spike {
     
     static final int MAXH = 20;
     static final int MAXW = 78;
-    static final int MAX = MAXW;
+    int MAX = MAXW;
     int height = 0;
     int width;
     int deltaWidth;
     
     Spike() {
-        this(MAX/2, -1);
+        this(MAXW/2, -1);
     }
     
     private Spike (int width, int deltaWidth) {

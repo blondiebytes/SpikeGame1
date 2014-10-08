@@ -10,6 +10,7 @@ import java.util.Random;
 public class SpikeGame {
 
     static int sentinalH = 55;
+    static int turn = 0;
     boolean gameOver = false;
     Spike spike = new Spike();
     ArrayList<Balloon> balloonDataStruct = new ArrayList();
@@ -69,8 +70,6 @@ public class SpikeGame {
                 s.cls();
                 spike.draw(s);
                 for (Balloon b : balloonDataStruct) {
-                    System.out.println("?");
-            
                     b.draw(s);
                 }
                 livesLabel.draw(s);
@@ -80,13 +79,12 @@ public class SpikeGame {
     
     
     public SpikeGame reactAndTick(CharKey k) {
-       Spike newSpike = spike.react(k);
        ArrayList<Balloon> newBalloonDataStruct = new ArrayList();
+       newBalloonDataStruct.add(new Balloon());
+       Spike newSpike = spike.react(k);
        LivesLabel newLivesLabel = livesLabel;
        ScoreLabel newScoreLabel = scoreLabel;
        boolean newGameOver = gameOver;
-
-       newBalloonDataStruct.add(new Balloon());
        
         // If spike moves, balloons move
         for (Balloon b: balloonDataStruct) {
@@ -100,9 +98,9 @@ public class SpikeGame {
         for (Iterator<Balloon> it = newBalloonDataStruct.iterator(); it.hasNext();) {
                     Balloon b = it.next();
                     SpikeGame newSpikeGameLivesScoreGameOver = this.collision(b);
-                    newSpikeGameLivesScoreGameOver.livesLabel = newLivesLabel;
-                    newSpikeGameLivesScoreGameOver.scoreLabel = newScoreLabel;
-                    newSpikeGameLivesScoreGameOver.gameOver = newGameOver;
+                    newLivesLabel = newSpikeGameLivesScoreGameOver.livesLabel;
+                    newScoreLabel = newSpikeGameLivesScoreGameOver.scoreLabel;
+                    newGameOver = newSpikeGameLivesScoreGameOver.gameOver;
                     if (b.height == sentinalH) {
                         it.remove();
                     }
@@ -110,9 +108,34 @@ public class SpikeGame {
         return new SpikeGame(newSpike, newBalloonDataStruct, newLivesLabel, newScoreLabel, newGameOver);
     }
         
+    public static void testConstructor() {
+         if (turn > 5) {
+         SpikeGame spikeGame = new SpikeGame();
+         if (spikeGame.spike.height == 0 && spikeGame.spike.width == spikeGame.spike.MAX / 2) {
+             System.out.println("SUCCESS: The spike starts in the middle of the screen!");
+         } else {
+             System.out.println("FAILURE: The spike does not start in the middle of the screen!");
+         }
+         if (spikeGame.balloonDataStruct.isEmpty()) {
+             System.out.println("SUCCESS: The balloonDataStruct starts empty!"); 
+         } else {
+             System.out.println("FAILURE: The balloonDataStruct doesn't start empty!"); 
+         }
+         if (spikeGame.livesLabel.lives == 2) {
+             System.out.println("SUCCESS: You start with 2 LIVES"); 
+         } else {
+             System.out.println("FAILURE: You don't start with 2 LIVES"); 
+         }
+         if (spikeGame.scoreLabel.score == 0) {
+             System.out.println("SUCCESS: You start with no score");
+         } else {
+             System.out.println("FAILURE: You start with a score");
+         }
+         }
+         
+    }
     
-    
-     public void verifyInvariants(SpikeGame oldSpikeGame, SpikeGame newSpikeGame, CharKey rnb) {
+     public void verifyInvariants(SpikeGame newSpikeGame, CharKey rnb) {
          
          // NewGame -> Testing Given Constructor
          // -------------------------------
@@ -122,42 +145,118 @@ public class SpikeGame {
          // 2 Lives
          // 0 Score
          // A boolean which says the game is not over 
+         testConstructor();
          
          
          // Testing gameOver & Lives
          // ---------------------------------
          // If the game is over, then lives should equal 0.
          // If the game is not over, then lives should be either 2 or 1. 
-         
-         
+         if (!this.gameOver) {
+             System.out.println("If the game is not over, then " + this.livesLabel.lives + " <= " + 2);
+         } else {
+             System.out.println("If the game is over, then " + this.livesLabel.lives + " == " + 0);
+         }
+         if (!newSpikeGame.gameOver) {
+             System.out.println("If the game is not over, then " + newSpikeGame.livesLabel.lives + " <= " + 2);
+         } else {
+             System.out.println("If the game is over, then " + newSpikeGame.livesLabel.lives + " == " + 0);
+         }
+            
            // Testing Score
          // ---------------------------------
          // In every game, the score should never be negative
+         if (this.scoreLabel.score >= 0 && this.scoreLabel.score >= 0) {
+             System.out.println("SUCCESS: The score is never less than 0!");
+         } else {
+              System.out.println("FAILURE: The score is less than 0!");
+         }
+            
       
-         
          // Testing React & Tick with spike & balloons
          // ---------------------------------
         // Button pressed = right; then spike moves over to the right (width++);
          // also balloons should all move up in this case
          
+         if(rnb.isRightArrow()) {
+            System.out.println("MoveRight -> Old Spike Width: " + (this.spike.width + 1) + " = " 
+                    + "New Spike Width: " + newSpikeGame.spike.width);
+            for (Balloon b : this.balloonDataStruct) {
+                for (Balloon nb : newSpikeGame.balloonDataStruct) {
+                    System.out.println("MoveRight -> Old Balloon Height: " + (b.height - 1) + " == " + 
+                            "New Balloon Height: " + nb.height);
+                    break;
+                }
+            }
+         }
+         
          //Button pressed = left; then spike moves over to the left (width--);
          // also balloons should all move up in this case
+         if(rnb.isLeftArrow()) {
+            System.out.println("MoveLeft -> Old Spike Width: " + (this.spike.width - 1) + " = " 
+                    + "New Spike Width: " + newSpikeGame.spike.width);
+            for (Balloon b : this.balloonDataStruct) {
+                for (Balloon nb : newSpikeGame.balloonDataStruct) {
+                    System.out.println("MoveLeft -> Old Balloon Height: " + (b.height - 1) + " == " + 
+                            "New Balloon Height: " + nb.height);
+                    break;
+                }
+            }
+         }
          
          // Button pressed = anything else; spike doesn't move (width = width); 
          // balloons should not move in this case
+         if(!rnb.isRightArrow() && !rnb.isLeftArrow()) {
+            System.out.println("NoMove -> Old Spike Width: " + this.spike.width + " = " 
+                    + "New Spike Width: " + newSpikeGame.spike.width);
+            for (Balloon b : this.balloonDataStruct) {
+                for (Balloon nb : newSpikeGame.balloonDataStruct) {
+                    System.out.println("NoMove -> Old Balloon Height: " + b.height + " == " + 
+                            "New Balloon Height: " + nb.height);
+                    break;
+                }
+            }
+         }
          
          
          //Testing Collision & the iteration
          // ---------------------------------
-         //Iterate through balloons -> if an old balloon has a height of 1, then it is
+         // Iterate through balloons -> if an old balloon has a height of 1, then it is
          // about to hit the spike or not hit the spike. Either way it disappears in the
          // next turn, so we should make sure it was removed. 
+         for (Balloon b : this.balloonDataStruct) {
+             if (b.height == 1) {
+                 System.out.println("COLLIDING: OldSpikeGameSize:" + 
+                         (this.balloonDataStruct.size() - 1) 
+                         + " == NewSpikeGameSize: " + newSpikeGame.balloonDataStruct.size() 
+                         + " == false");
+             }
+         }
          
          // One of two things should happen everytime there is a collision:
          // If the balloon hits the spike, then it should have one less life
+         for (Balloon b : this.balloonDataStruct) {
+             if (b.height == 1) {
+                 if (this.spike.width == b.width) {
+                     System.out.println("HIT THE SPIKE: OldSpikeLives:" + (this.livesLabel.lives - 1) + 
+                             " == NewSpikeLives:" + newSpikeGame.livesLabel.lives);
+                 }
+             }
+         }
          // If the balloon does not hit the spike, then its score should increase
+          for (Balloon b : this.balloonDataStruct) {
+             if (b.height == 1) {
+                 if (this.spike.width != b.width) {
+                     System.out.println("MISS THE SPIKE: OldSpikeScore:" + (this.scoreLabel.score - 1) + 
+                             " == NewSpikeSCore:" + newSpikeGame.scoreLabel.score);
+                 }
+             }
+         }
+         // If neither of these things happen, then the spike's lives, score, and gameOver should stay the same
+           
          
-
+         
+            turn++;
          
     }
      

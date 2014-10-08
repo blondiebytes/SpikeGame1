@@ -40,7 +40,6 @@ public class Balloon {
     
     public void draw (ConsoleSystemInterface s) {
         String disp = "()";
-        System.out.println("() at " + width + " " + height);
             s.print(width, height, disp, s.CYAN);
         
     }

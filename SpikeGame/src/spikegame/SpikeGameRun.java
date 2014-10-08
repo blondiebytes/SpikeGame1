@@ -7,8 +7,6 @@ import net.slashie.libjcsi.wswing.WSwingConsoleInterface;
 
 public class SpikeGameRun {
     
-
-
     public static void main(String[] args) {
 
         ConsoleSystemInterface s = new WSwingConsoleInterface("Spike by Kathryn", true);
@@ -26,10 +24,8 @@ public class SpikeGameRun {
             // Keep drawing, reacting, and ticking until the game is over
             while (!spikeGame.gameOver) {
                   spikeGame.draw(s);
-                  System.out.println("I drew thingz");
                   SpikeGame newSpikeGame = spikeGame.reactAndTick(s.inkey());
                   spikeGame = newSpikeGame;
-                  System.out.println("I reacted to thingz");
             }
             // Set up final view
             s.cls();
