@@ -233,13 +233,16 @@ public class SpikeGame {
          // Iterate through balloons -> if an old balloon has a height of 1, then it is
          // about to hit the spike or not hit the spike. Either way it disappears in the
          // next turn, so we should make sure it was removed. 
-         for (Balloon b : this.balloonDataStruct) {
+        int i = 0;
+        for (Balloon b : this.balloonDataStruct) {
              if (b.height == 1) {
-                 System.out.println("COLLIDING: OldSpikeGameSize:" + 
-                         (this.balloonDataStruct.size() - 1) 
-                         + " == NewSpikeGameSize: " + newSpikeGame.balloonDataStruct.size());
+                i++;
              }
          }
+        if (i != 0) {
+        System.out.println("COLLIDING: OldSpikeGameSize:" + this.balloonDataStruct.size() 
+                         + " == NewSpikeGameSize: " + newSpikeGame.balloonDataStruct.size());
+        }
          
          // One of two things should happen everytime there is a collision:
          // If the balloon hits the spike, then it should have one less life
@@ -252,16 +255,15 @@ public class SpikeGame {
                     System.out.println("SUCCESS! HIT THE SPIKE!");
                 } else if ((this.scoreLabel.score + 5) == newSpikeGame.scoreLabel.score) {
                      System.out.println("SUCCESS! MISS THE SPIKE!");
+                } else if (this.isEqualToLiScGo(newSpikeGame)) {
+                        System.out.println("SUCCESS! NO COLLISION!");
                 } else {
-                        System.out.println("NO COLLISION: OldSpikeLives&Score&GameOver = "
-                        + "NewSpikeLives&Score&GameOver --> " 
-                        + this.isEqualToLiScGo(newSpikeGame) + " == true");
-                 }
+                    System.out.println("ERROR!");
+                }
          }
 
     }
-         
-            turn++;
+       turn++;
      }
      
      public CharKey randomButton() {
