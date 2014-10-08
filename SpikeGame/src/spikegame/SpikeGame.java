@@ -208,87 +208,66 @@ public class SpikeGame {
         // Button pressed = right; then spike moves over to the right (width++);
          // also balloons should all move up in this case
          
-         if(rnb.isRightArrow()) {
-            System.out.println("MoveRight -> Old Spike Width: " + (this.spike.width + 1) + " = " 
-                    + "New Spike Width: " + newSpikeGame.spike.width);
-            for (Balloon b : this.balloonDataStruct) {
-                for (Balloon nb : newSpikeGame.balloonDataStruct) {
-                    System.out.println("MoveRight -> Old Balloon Height: " + (b.height - 1) + " == " + 
-                            "New Balloon Height: " + nb.height);
-                    break;
-                }
-            }
-         }
-         
          //Button pressed = left; then spike moves over to the left (width--);
          // also balloons should all move up in this case
-         if(rnb.isLeftArrow()) {
-            System.out.println("MoveLeft -> Old Spike Width: " + (this.spike.width - 1) + " = " 
-                    + "New Spike Width: " + newSpikeGame.spike.width);
-            for (Balloon b : this.balloonDataStruct) {
-                for (Balloon nb : newSpikeGame.balloonDataStruct) {
-                    System.out.println("MoveLeft -> Old Balloon Height: " + (b.height - 1) + " == " + 
-                            "New Balloon Height: " + nb.height);
-                    break;
-                }
-            }
-         }
          
-         // Button pressed = anything else; spike doesn't move (width = width); 
+          // Button pressed = anything else; spike doesn't move (width = width); 
          // balloons should not move in this case
-         if(!rnb.isRightArrow() && !rnb.isLeftArrow()) {
-            System.out.println("NoMove -> Old Spike Width: " + this.spike.width + " = " 
-                    + "New Spike Width: " + newSpikeGame.spike.width);
-            for (Balloon b : this.balloonDataStruct) {
-                for (Balloon nb : newSpikeGame.balloonDataStruct) {
-                    System.out.println("NoMove -> Old Balloon Height: " + b.height + " == " + 
-                            "New Balloon Height: " + nb.height);
-                    break;
-                }
-            }
-         }
+        
+         /// &&&&&&&
          
-         // PROBLEM PROBLEM PROBLEM PROBLEM
          
          //Testing Collision & the iteration
          // ---------------------------------
          // Iterate through balloons -> if an old balloon has a height of 1, then it is
          // about to hit the spike or not hit the spike. Either way it disappears in the
          // next turn, so we should make sure it was removed. 
-        int i = 0;
-        for (Balloon b : this.balloonDataStruct) {
-             if (b.height == 1) {
-                i++;
-             }
-         }
-        if (i == 0) {
-        System.out.println("NOTHING COLLIDED: OldSpikeGameSize:" + (this.balloonDataStruct.size() + 1)
-                         + " == NewSpikeGameSize: " + newSpikeGame.balloonDataStruct.size());
-        } else {
-            System.out.println("SOMETHING COLLIDED: OldSpikeGameSize:" + this.balloonDataStruct.size() 
-                         + " == NewSpikeGameSize: " + newSpikeGame.balloonDataStruct.size());
-        }
          
+         // PRINTING TESTS
+//        int dw = 0;
+//        if (rnb.isRightArrow()) {
+//            dw = 1;
+//        } else if (rnb.isLeftArrow()) {
+//            dw = -1;
+//        }
+//        System.out.println("MoveRight -> Old Spike Width: " + (this.spike.width + dw) + " = " 
+//                    + "New Spike Width: " + newSpikeGame.spike.width);
+//        
+//        if (dw != 0) {
+//            for (Balloon b : this.balloonDataStruct) {
+//                boolean found = false;
+//                for (Balloon nb : newSpikeGame.balloonDataStruct) {
+//                    if (b.identity == nb.identity) {
+//                        System.out.println("MoveRight -> Old Balloon Height: " + (b.height - 1) + " == " + 
+//                            "New Balloon Height: " + nb.height);
+//                        }
+//                    }
+//                }
+//            }
+        
+         
+     
          // One of two things should happen everytime there is a collision:
          // If the balloon hits the spike, then it should have one less life
          // If the balloon does not hit the spike, then its score should increase
          // If neither of these things happen, then the spike's lives, score, and gameOver should stay the same
         
-        // WORKS!!!!!
-        for (Balloon b : this.balloonDataStruct) {
-             if (b.height == 1) {
-                 // ONE OF THESE THINGS ARE TRUE
-                if ((this.livesLabel.lives - 1) == newSpikeGame.livesLabel.lives) {
-                    System.out.println("SUCCESS! HIT THE SPIKE!");
-                } else if ((this.scoreLabel.score + 5) == newSpikeGame.scoreLabel.score) {
-                     System.out.println("SUCCESS! MISS THE SPIKE!");
-                } else if (this.isEqualToLiScGo(newSpikeGame)) {
-                        System.out.println("SUCCESS! NO COLLISION!");
-                } else {
-                    System.out.println("ERROR!");
-                }
-         }
-    }
+         // PRINTING TESTS
+//
+//        for (Balloon b : this.balloonDataStruct) {
+//             if (b.height == 1) {
+//                 // ONE OF THESE THINGS ARE TRUE
+//                if ((this.livesLabel.lives - 1) == newSpikeGame.livesLabel.lives) {
+//                    System.out.println("SUCCESS! HIT THE SPIKE!");
+//                } else if ((this.scoreLabel.score + 5) == newSpikeGame.scoreLabel.score) {
+//                     System.out.println("SUCCESS! MISS THE SPIKE!");
+//                } else if (this.isEqualToLiScGo(newSpikeGame)) {
+//                        System.out.println("SUCCESS! NO COLLISION!");
+//                } else {
+//                    System.out.println("ERROR!");
+//                }
+//        }
+//    }
         
      }
      

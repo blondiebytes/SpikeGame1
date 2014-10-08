@@ -8,7 +8,7 @@ import net.slashie.libjcsi.wswing.WSwingConsoleInterface;
 public class SpikeGameTest {
     
   public static void main(String[] args) throws Exception {
-       for (int game = 0; game <= 1; game++) {
+       for (int game = 0; game <= 10; game++) {
             // Create a new SpikeGame
             SpikeGame spikeGame = new SpikeGame(); 
            
