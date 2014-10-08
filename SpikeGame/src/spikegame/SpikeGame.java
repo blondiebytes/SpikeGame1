@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.Random;
 import static spikegame.TestException.checkGameOverLives;
 import static spikegame.TestException.checkIfPositiveScore;
-import static spikegame.TestException.testCollisionBubbleIteration;
+import static spikegame.TestException.testAdded;
 import static spikegame.TestException.testCollisionLivesScore;
 import static spikegame.TestException.testConstructor;
 import static spikegame.TestException.testReactTickSpikeBalloon;
@@ -154,7 +154,7 @@ public class SpikeGame {
          TestException.testConstructor();
          testCollisionLivesScore(this, newSpikeGame);
          testReactTickSpikeBalloon(this, newSpikeGame,rnb);
-         testCollisionBubbleIteration(this,newSpikeGame);
+         testAdded(this,newSpikeGame);
          
          
          // NewGame -> Testing Given Constructor
@@ -166,39 +166,42 @@ public class SpikeGame {
          // 0 Score
          // A boolean which says the game is not over 
          
-         // WORKS!!!
-         SpikeGame.testConstructor();
+         
+         // PRINTING TESTERS:
+         //  SpikeGame.testConstructor();
          
          
-         // WORKS!!
          // Testing gameOver & Lives
          // ---------------------------------
          // If the game is over, then lives should equal 0.
          // If the game is not over, then lives should be either 2 or 1. 
-         if (!this.gameOver) {
-             System.out.println("If the game is not over, then " + this.livesLabel.lives + " <= " + 2);
-         } else {
-             System.out.println("If the game is over, then " + this.livesLabel.lives + " == " + 0);
-         }
-         if (!newSpikeGame.gameOver) {
-             System.out.println("If the game is not over, then " + newSpikeGame.livesLabel.lives + " <= " + 2);
-         } else {
-             System.out.println("If the game is over, then " + newSpikeGame.livesLabel.lives + " == " + 0);
-         }
+         
+         // PRINTING TESTERS:
+//         if (!this.gameOver) {
+//             System.out.println("If the game is not over, then " + this.livesLabel.lives + " <= " + 2);
+//         } else {
+//             System.out.println("If the game is over, then " + this.livesLabel.lives + " == " + 0);
+//         }
+//         if (!newSpikeGame.gameOver) {
+//             System.out.println("If the game is not over, then " + newSpikeGame.livesLabel.lives + " <= " + 2);
+//         } else {
+//             System.out.println("If the game is over, then " + newSpikeGame.livesLabel.lives + " == " + 0);
+//         }
             
          
-         // WORKS!
-           // Testing Score
+        
+         // Testing Score
          // ---------------------------------
          // In every game, the score should never be negative
-         if (this.scoreLabel.score >= 0 && this.scoreLabel.score >= 0) {
-             System.out.println("SUCCESS: The score is never less than 0!");
-         } else {
-              System.out.println("FAILURE: The score is less than 0!");
-         }
+         
+         // PRINTING TESTERS
+//         if (this.scoreLabel.score >= 0 && this.scoreLabel.score >= 0) {
+//             System.out.println("SUCCESS: The score is never less than 0!");
+//         } else {
+//              System.out.println("FAILURE: The score is less than 0!");
+//         }
             
          
-        // PROBLEM PROBLEM PROBLEM PROBLEM
       
          // Testing React & Tick with spike & balloons
          // ---------------------------------

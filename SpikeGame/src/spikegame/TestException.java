@@ -95,29 +95,28 @@ public class TestException {
         }
     }
 
-    public static void testCollisionBubbleIteration(SpikeGame oldSpikeGame, SpikeGame newSpikeGame) throws Exception {
+    public static void testAdded(SpikeGame oldSpikeGame, SpikeGame newSpikeGame) throws Exception {
         int unMatched = 0;
-        boolean somethingCollided = false;
+        boolean newBalloon = false;
+        // Checking whether something is added 
 
         for (Balloon nb : newSpikeGame.balloonDataStruct) {
+            boolean oldBalloon = false;
             for (Balloon b : oldSpikeGame.balloonDataStruct) {
-                if (b.height == 1) {
-                    if (nb.identity != b.identity) {
-                        unMatched++;
-                    }
-                }
-
-                if (nb.identity != b.identity) {
-                    unMatched++;
-                }
+                    if (nb.identity == b.identity) {
+                        oldBalloon = true;
+                   }
             }
+            
+            if (! oldBalloon ) {
+               newBalloon = true;
+            }
+            
         }
-        if (somethingCollided && unMatched != 1) {
-            throw new Exception("Something collided, but it wasn't matched properly");
-        }
-        if (!somethingCollided && unMatched == 1) {
-            throw new Exception("Nothing collided, but something was unmatched");
-        }
-
+        
+        if (! newBalloon) {
+               throw new Exception("The new Balloon was not added");
+            }
     }
+        
 }
