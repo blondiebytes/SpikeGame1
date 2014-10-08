@@ -6,11 +6,16 @@ import net.slashie.libjcsi.CharKey;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
+import static spikegame.TestException.checkGameOverLives;
+import static spikegame.TestException.checkIfPositiveScore;
+import static spikegame.TestException.testCollisionBubbleIteration;
+import static spikegame.TestException.testCollisionLivesScore;
+import static spikegame.TestException.testConstructor;
+import static spikegame.TestException.testReactTickSpikeBalloon;
 
 public class SpikeGame {
 
     static int sentinalH = 55;
-    static int turn = 0;
     boolean gameOver = false;
     Spike spike = new Spike();
     ArrayList<Balloon> balloonDataStruct = new ArrayList();
@@ -115,7 +120,6 @@ public class SpikeGame {
     }
         
     public static void testConstructor() {
-         if (turn > 5) {
          SpikeGame spikeGame = new SpikeGame();
          if (spikeGame.spike.height == 0 && spikeGame.spike.width == spikeGame.spike.MAX / 2) {
              System.out.println("SUCCESS: The spike starts in the middle of the screen!");
@@ -137,11 +141,20 @@ public class SpikeGame {
          } else {
              System.out.println("FAILURE: You start with a score");
          }
-         }
+         
          
     }
     
-     public void verifyInvariants(SpikeGame newSpikeGame, CharKey rnb) {
+     public void verifyInvariants(SpikeGame newSpikeGame, CharKey rnb) throws Exception {
+         
+         // Once we get rid of prints, use these tester with exceptions
+         checkGameOverLives(this, newSpikeGame);
+         checkIfPositiveScore(this, newSpikeGame);
+         TestException.testConstructor();
+         testCollisionLivesScore(this, newSpikeGame);
+         testReactTickSpikeBalloon(this, newSpikeGame,rnb);
+         testCollisionBubbleIteration(this,newSpikeGame);
+         
          
          // NewGame -> Testing Given Constructor
          // -------------------------------
@@ -151,9 +164,12 @@ public class SpikeGame {
          // 2 Lives
          // 0 Score
          // A boolean which says the game is not over 
-         testConstructor();
+         
+         // WORKS!!!
+         SpikeGame.testConstructor();
          
          
+         // WORKS!!
          // Testing gameOver & Lives
          // ---------------------------------
          // If the game is over, then lives should equal 0.
@@ -169,6 +185,8 @@ public class SpikeGame {
              System.out.println("If the game is over, then " + newSpikeGame.livesLabel.lives + " == " + 0);
          }
             
+         
+         // WORKS!
            // Testing Score
          // ---------------------------------
          // In every game, the score should never be negative
@@ -239,8 +257,11 @@ public class SpikeGame {
                 i++;
              }
          }
-        if (i != 0) {
-        System.out.println("COLLIDING: OldSpikeGameSize:" + this.balloonDataStruct.size() 
+        if (i == 0) {
+        System.out.println("NOTHING COLLIDED: OldSpikeGameSize:" + this.balloonDataStruct.size() 
+                         + " == NewSpikeGameSize: " + newSpikeGame.balloonDataStruct.size());
+        } else {
+            System.out.println("SOMETHING COLLIDED: OldSpikeGameSize:" + this.balloonDataStruct.size() 
                          + " == NewSpikeGameSize: " + newSpikeGame.balloonDataStruct.size());
         }
          
@@ -248,7 +269,9 @@ public class SpikeGame {
          // If the balloon hits the spike, then it should have one less life
          // If the balloon does not hit the spike, then its score should increase
          // If neither of these things happen, then the spike's lives, score, and gameOver should stay the same
-         for (Balloon b : this.balloonDataStruct) {
+        
+        // WORKS!!!!!
+        for (Balloon b : this.balloonDataStruct) {
              if (b.height == 1) {
                  // ONE OF THESE THINGS ARE TRUE
                 if ((this.livesLabel.lives - 1) == newSpikeGame.livesLabel.lives) {
@@ -261,9 +284,8 @@ public class SpikeGame {
                     System.out.println("ERROR!");
                 }
          }
-
     }
-       turn++;
+        
      }
      
      public CharKey randomButton() {
