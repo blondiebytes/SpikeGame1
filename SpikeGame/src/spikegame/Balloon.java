@@ -12,12 +12,15 @@ public class Balloon {
     // Make width random later
     int width = 30;
     int height;
+    int identity; 
+    static int count;
     
     Balloon() {
-        this(MAX, -500);
+        this(MAX, -500, count);
+        count++;
     }
     
-    private Balloon (int height, int width) {
+    private Balloon (int height, int width, int identity) {
         this.height = height;
         // Using Sentinal w = -500
         if (width == -500) {
@@ -27,10 +30,12 @@ public class Balloon {
         {
             this.width = width;
         }
+        this.identity = identity;
+        
     }
     
     public Balloon tick() {
-        return new Balloon(this.height - 1, this.width);
+        return new Balloon(this.height - 1, this.width, this.identity);
     }
     
     public Balloon react (CharKey k) {

@@ -148,6 +148,7 @@ public class SpikeGame {
      public void verifyInvariants(SpikeGame newSpikeGame, CharKey rnb) throws Exception {
          
          // Once we get rid of prints, use these tester with exceptions
+         // These first five tests work
          checkGameOverLives(this, newSpikeGame);
          checkIfPositiveScore(this, newSpikeGame);
          TestException.testConstructor();
@@ -258,7 +259,7 @@ public class SpikeGame {
              }
          }
         if (i == 0) {
-        System.out.println("NOTHING COLLIDED: OldSpikeGameSize:" + this.balloonDataStruct.size() 
+        System.out.println("NOTHING COLLIDED: OldSpikeGameSize:" + (this.balloonDataStruct.size() + 1)
                          + " == NewSpikeGameSize: " + newSpikeGame.balloonDataStruct.size());
         } else {
             System.out.println("SOMETHING COLLIDED: OldSpikeGameSize:" + this.balloonDataStruct.size() 
