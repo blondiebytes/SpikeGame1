@@ -107,6 +107,12 @@ public class SpikeGame {
         }
         return new SpikeGame(newSpike, newBalloonDataStruct, newLivesLabel, newScoreLabel, newGameOver);
     }
+    
+    public boolean isEqualToLiScGo(SpikeGame s) {
+        return (this.livesLabel.lives == s.livesLabel.lives) 
+                && (this.scoreLabel.score == s.scoreLabel.score) 
+                && (this.gameOver == s.gameOver);
+    }
         
     public static void testConstructor() {
          if (turn > 5) {
@@ -172,6 +178,8 @@ public class SpikeGame {
               System.out.println("FAILURE: The score is less than 0!");
          }
             
+         
+        // PROBLEM PROBLEM PROBLEM PROBLEM
       
          // Testing React & Tick with spike & balloons
          // ---------------------------------
@@ -218,6 +226,7 @@ public class SpikeGame {
             }
          }
          
+         // PROBLEM PROBLEM PROBLEM PROBLEM
          
          //Testing Collision & the iteration
          // ---------------------------------
@@ -228,37 +237,32 @@ public class SpikeGame {
              if (b.height == 1) {
                  System.out.println("COLLIDING: OldSpikeGameSize:" + 
                          (this.balloonDataStruct.size() - 1) 
-                         + " == NewSpikeGameSize: " + newSpikeGame.balloonDataStruct.size() 
-                         + " == false");
+                         + " == NewSpikeGameSize: " + newSpikeGame.balloonDataStruct.size());
              }
          }
          
          // One of two things should happen everytime there is a collision:
          // If the balloon hits the spike, then it should have one less life
+         // If the balloon does not hit the spike, then its score should increase
+         // If neither of these things happen, then the spike's lives, score, and gameOver should stay the same
          for (Balloon b : this.balloonDataStruct) {
              if (b.height == 1) {
-                 if (this.spike.width == b.width) {
-                     System.out.println("HIT THE SPIKE: OldSpikeLives:" + (this.livesLabel.lives - 1) + 
-                             " == NewSpikeLives:" + newSpikeGame.livesLabel.lives);
+                 // ONE OF THESE THINGS ARE TRUE
+                if ((this.livesLabel.lives - 1) == newSpikeGame.livesLabel.lives) {
+                    System.out.println("SUCCESS! HIT THE SPIKE!");
+                } else if ((this.scoreLabel.score + 5) == newSpikeGame.scoreLabel.score) {
+                     System.out.println("SUCCESS! MISS THE SPIKE!");
+                } else {
+                        System.out.println("NO COLLISION: OldSpikeLives&Score&GameOver = "
+                        + "NewSpikeLives&Score&GameOver --> " 
+                        + this.isEqualToLiScGo(newSpikeGame) + " == true");
                  }
-             }
          }
-         // If the balloon does not hit the spike, then its score should increase
-          for (Balloon b : this.balloonDataStruct) {
-             if (b.height == 1) {
-                 if (this.spike.width != b.width) {
-                     System.out.println("MISS THE SPIKE: OldSpikeScore:" + (this.scoreLabel.score - 1) + 
-                             " == NewSpikeSCore:" + newSpikeGame.scoreLabel.score);
-                 }
-             }
-         }
-         // If neither of these things happen, then the spike's lives, score, and gameOver should stay the same
-           
-         
+
+    }
          
             turn++;
-         
-    }
+     }
      
      public CharKey randomButton() {
          Random randGen = new Random();
