@@ -29,7 +29,7 @@ public class Spike {
         int newWidth = width + deltaWidth;
         if (newWidth < 0) {
             return new Spike(0, deltaWidth);
-        } else if (newWidth > MAX) {
+        } else if (newWidth >= MAX) {
             return new Spike(MAX, -deltaWidth);
         } else {
             return new Spike(newWidth, deltaWidth);

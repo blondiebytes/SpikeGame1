@@ -64,14 +64,14 @@ public class SpikeGameTest {
             
              }
        
-                System.out.println("upArrowStartTest run: " + upArrowStartTest + " times");
-                System.out.println("downArrowRestartTest run: " + downArrowRestartTest + " times");
-                System.out.println("checkGameOverLives run: " + checkGameOverLives + " times");
-                System.out.println("checkIfPositiveScore run: " + checkIfPositiveScore + " times");
-                System.out.println("testConstructor run: " + testConstructor + " times");
-                System.out.println("testCollisionLivesScore run: " + testCollisionLivesScore + " times");
-                System.out.println("testReactTickSpikeBalloon run: " + testReactTickSpikeBalloon + " times");
-                System.out.println("testAdded run: " + testAdded + " times");
+                System.out.println("upArrowStartTest success: " + upArrowStartTest + " times");
+                System.out.println("downArrowRestartTest success: " + downArrowRestartTest + " times");
+                System.out.println("checkGameOverLives success: " + checkGameOverLives + " times");
+                System.out.println("checkIfPositiveScore success: " + checkIfPositiveScore + " times");
+                System.out.println("testConstructor success: " + testConstructor + " times");
+                System.out.println("testCollisionLivesScore success: " + testCollisionLivesScore + " times");
+                System.out.println("testReactTickSpikeBalloon success: " + testReactTickSpikeBalloon + " times");
+                System.out.println("testAdded success: " + testAdded + " times");
   }
   
     }  

@@ -10,6 +10,31 @@ public class TestException {
     static int testReactTickSpikeBalloon = 0;
     static int testAdded = 0; 
 
+      public static void testConstructor() throws Exception {
+        SpikeGame spikeGame = new SpikeGame();
+        if (spikeGame.spike.height != 0 && spikeGame.spike.width != spikeGame.spike.MAX / 2) {
+            throw new Exception("FAILURE: The spike does not start in the middle of the screen!");
+        }
+        if (!spikeGame.balloonDataStruct.isEmpty()) {
+            throw new Exception("FAILURE: The balloonDataStruct doesn't start empty!");
+        }
+        if (spikeGame.livesLabel.lives != 2) {
+            throw new Exception("FAILURE: You don't start with 2 LIVES");
+        }
+        if (spikeGame.scoreLabel.score != 0) {
+            throw new Exception("FAILURE: You start with a score");
+        }
+        testConstructor++;
+
+    }
+      
+   public static void checkIfPositiveScore(SpikeGame oSG, SpikeGame nSG) throws Exception {
+        if (oSG.scoreLabel.score < 0 || nSG.scoreLabel.score < 0) {
+            throw new Exception("Score is not positive");
+        }
+        checkIfPositiveScore++;
+    }
+    
     public static void checkGameOverLives(SpikeGame oSG, SpikeGame nSG) throws Exception {
         if (oSG.gameOver) {
             if (oSG.livesLabel.lives != 0) {
@@ -31,32 +56,7 @@ public class TestException {
         }
         checkGameOverLives++;
     }
-
-    public static void checkIfPositiveScore(SpikeGame oSG, SpikeGame nSG) throws Exception {
-        if (oSG.scoreLabel.score < 0 || nSG.scoreLabel.score < 0) {
-            throw new Exception("Score is not positive");
-        }
-        checkIfPositiveScore++;
-    }
-   
-
-    public static void testConstructor() throws Exception {
-        SpikeGame spikeGame = new SpikeGame();
-        if (spikeGame.spike.height != 0 && spikeGame.spike.width != spikeGame.spike.MAX / 2) {
-            throw new Exception("FAILURE: The spike does not start in the middle of the screen!");
-        }
-        if (!spikeGame.balloonDataStruct.isEmpty()) {
-            throw new Exception("FAILURE: The balloonDataStruct doesn't start empty!");
-        }
-        if (spikeGame.livesLabel.lives != 2) {
-            throw new Exception("FAILURE: You don't start with 2 LIVES");
-        }
-        if (spikeGame.scoreLabel.score != 0) {
-            throw new Exception("FAILURE: You start with a score");
-        }
-        testConstructor++;
-
-    }
+  
 
     public static void testCollisionLivesScore(SpikeGame oldSpikeGame, SpikeGame newSpikeGame) throws Exception {
         for (Balloon b : oldSpikeGame.balloonDataStruct) {
@@ -72,6 +72,34 @@ public class TestException {
         }
         testCollisionLivesScore++;
     }
+    
+     public static void testAdded(SpikeGame oldSpikeGame, SpikeGame newSpikeGame, CharKey rnb) throws Exception {
+        boolean newBalloon = false;
+        // Checking whether something is added 
+
+        for (Balloon nb : newSpikeGame.balloonDataStruct) {
+            boolean oldBalloon = false;
+            for (Balloon b : oldSpikeGame.balloonDataStruct) {
+                    if (nb.identity == b.identity) {
+                        oldBalloon = true;
+                   }
+            }
+            
+            if (! oldBalloon ) {
+               newBalloon = true;
+            }
+        }
+        
+        if (! newBalloon && rnb.isLeftArrow() && rnb.isRightArrow()) {
+               throw new Exception("The new Balloon was not added");
+            }
+        
+         if (newBalloon && !rnb.isLeftArrow() && !rnb.isRightArrow()) {
+               throw new Exception("A new Balloon was added, but the spike didn't move");
+            }
+        testAdded++;
+    }
+        
 
     public static void testReactTickSpikeBalloon(SpikeGame oldSpikeGame, SpikeGame newSpikeGame, CharKey rnb) throws Exception {
         int dw = 0;
@@ -126,33 +154,4 @@ public class TestException {
         
         testReactTickSpikeBalloon++;
     }
-
-    public static void testAdded(SpikeGame oldSpikeGame, SpikeGame newSpikeGame, CharKey rnb) throws Exception {
-        int unMatched = 0;
-        boolean newBalloon = false;
-        // Checking whether something is added 
-
-        for (Balloon nb : newSpikeGame.balloonDataStruct) {
-            boolean oldBalloon = false;
-            for (Balloon b : oldSpikeGame.balloonDataStruct) {
-                    if (nb.identity == b.identity) {
-                        oldBalloon = true;
-                   }
-            }
-            
-            if (! oldBalloon ) {
-               newBalloon = true;
-            }
-        }
-        
-        if (! newBalloon && rnb.isLeftArrow() && rnb.isRightArrow()) {
-               throw new Exception("The new Balloon was not added");
-            }
-        
-         if (newBalloon && !rnb.isLeftArrow() && !rnb.isRightArrow()) {
-               throw new Exception("A new Balloon was added, but the spike didn't move");
-            }
-        testAdded++;
-    }
-        
 }
