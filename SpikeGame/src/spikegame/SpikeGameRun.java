@@ -1,13 +1,15 @@
 
 package spikegame;
 
+import net.slashie.libjcsi.CharKey;
 import net.slashie.libjcsi.ConsoleSystemInterface;
 import net.slashie.libjcsi.wswing.WSwingConsoleInterface;
+import static spikegame.TestException.testReactTickSpikeBalloon;
 
 
 public class SpikeGameRun {
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         ConsoleSystemInterface s = new WSwingConsoleInterface("Spike by Kathryn", true);
 
@@ -24,7 +26,9 @@ public class SpikeGameRun {
             // Keep drawing, reacting, and ticking until the game is over
             while (!spikeGame.gameOver) {
                   spikeGame.draw(s);
-                  SpikeGame newSpikeGame = spikeGame.reactAndTick(s.inkey());
+                  CharKey k = s.inkey();
+                  SpikeGame newSpikeGame = spikeGame.reactAndTick(k);
+                  testReactTickSpikeBalloon(spikeGame, newSpikeGame,k);
                   spikeGame = newSpikeGame;
             }
             // Set up final view

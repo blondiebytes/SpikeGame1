@@ -85,8 +85,13 @@ public class SpikeGame {
     
     public SpikeGame reactAndTick(CharKey k) {
        ArrayList<Balloon> newBalloonDataStruct = new ArrayList();
-       newBalloonDataStruct.add(new Balloon());
        Spike newSpike = spike.react(k);
+       
+//        Dealing with the new balloon
+       if (!newSpike.isEqualTo(spike)) {
+         newBalloonDataStruct.add(new Balloon().tick());
+       } 
+       
        LivesLabel newLivesLabel = livesLabel;
        ScoreLabel newScoreLabel = scoreLabel;
        boolean newGameOver = gameOver;
@@ -100,9 +105,12 @@ public class SpikeGame {
                 newBalloonDataStruct.add(nb);
         }
         
+        
+        
         for (Iterator<Balloon> it = newBalloonDataStruct.iterator(); it.hasNext();) {
                     Balloon b = it.next();
-                    SpikeGame newSpikeGameLivesScoreGameOver = this.collision(b);
+                    SpikeGame newSpikeGameLivesScoreGameOver = 
+                            (new SpikeGame (newSpike, newBalloonDataStruct, livesLabel, scoreLabel, gameOver)).collision(b);
                     newLivesLabel = newSpikeGameLivesScoreGameOver.livesLabel;
                     newScoreLabel = newSpikeGameLivesScoreGameOver.scoreLabel;
                     newGameOver = newSpikeGameLivesScoreGameOver.gameOver;
@@ -119,31 +127,31 @@ public class SpikeGame {
                 && (this.gameOver == s.gameOver);
     }
         
-    public static void testConstructor() {
-         SpikeGame spikeGame = new SpikeGame();
-         if (spikeGame.spike.height == 0 && spikeGame.spike.width == spikeGame.spike.MAX / 2) {
-             System.out.println("SUCCESS: The spike starts in the middle of the screen!");
-         } else {
-             System.out.println("FAILURE: The spike does not start in the middle of the screen!");
-         }
-         if (spikeGame.balloonDataStruct.isEmpty()) {
-             System.out.println("SUCCESS: The balloonDataStruct starts empty!"); 
-         } else {
-             System.out.println("FAILURE: The balloonDataStruct doesn't start empty!"); 
-         }
-         if (spikeGame.livesLabel.lives == 2) {
-             System.out.println("SUCCESS: You start with 2 LIVES"); 
-         } else {
-             System.out.println("FAILURE: You don't start with 2 LIVES"); 
-         }
-         if (spikeGame.scoreLabel.score == 0) {
-             System.out.println("SUCCESS: You start with no score");
-         } else {
-             System.out.println("FAILURE: You start with a score");
-         }
-         
-         
-    }
+//    public static void testConstructor() {
+//         SpikeGame spikeGame = new SpikeGame();
+//         if (spikeGame.spike.height == 0 && spikeGame.spike.width == spikeGame.spike.MAX / 2) {
+//             System.out.println("SUCCESS: The spike starts in the middle of the screen!");
+//         } else {
+//             System.out.println("FAILURE: The spike does not start in the middle of the screen!");
+//         }
+//         if (spikeGame.balloonDataStruct.isEmpty()) {
+//             System.out.println("SUCCESS: The balloonDataStruct starts empty!"); 
+//         } else {
+//             System.out.println("FAILURE: The balloonDataStruct doesn't start empty!"); 
+//         }
+//         if (spikeGame.livesLabel.lives == 2) {
+//             System.out.println("SUCCESS: You start with 2 LIVES"); 
+//         } else {
+//             System.out.println("FAILURE: You don't start with 2 LIVES"); 
+//         }
+//         if (spikeGame.scoreLabel.score == 0) {
+//             System.out.println("SUCCESS: You start with no score");
+//         } else {
+//             System.out.println("FAILURE: You start with a score");
+//         }
+//         
+//         
+//    }
     
      public void verifyInvariants(SpikeGame newSpikeGame, CharKey rnb) throws Exception {
          
@@ -154,7 +162,7 @@ public class SpikeGame {
          TestException.testConstructor();
          testCollisionLivesScore(this, newSpikeGame);
          testReactTickSpikeBalloon(this, newSpikeGame,rnb);
-         testAdded(this,newSpikeGame);
+         testAdded(this,newSpikeGame, rnb);
          
          
          // NewGame -> Testing Given Constructor

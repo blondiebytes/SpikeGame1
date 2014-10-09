@@ -3,6 +3,12 @@ package spikegame;
 import net.slashie.libjcsi.CharKey;
 
 public class TestException {
+    static int checkGameOverLives = 0;
+    static int checkIfPositiveScore = 0;
+    static int testConstructor = 0;
+    static int testCollisionLivesScore = 0;
+    static int testReactTickSpikeBalloon = 0;
+    static int testAdded = 0; 
 
     public static void checkGameOverLives(SpikeGame oSG, SpikeGame nSG) throws Exception {
         if (oSG.gameOver) {
@@ -23,13 +29,16 @@ public class TestException {
                 }
             }
         }
+        checkGameOverLives++;
     }
 
     public static void checkIfPositiveScore(SpikeGame oSG, SpikeGame nSG) throws Exception {
         if (oSG.scoreLabel.score < 0 || nSG.scoreLabel.score < 0) {
             throw new Exception("Score is not positive");
         }
+        checkIfPositiveScore++;
     }
+   
 
     public static void testConstructor() throws Exception {
         SpikeGame spikeGame = new SpikeGame();
@@ -45,6 +54,7 @@ public class TestException {
         if (spikeGame.scoreLabel.score != 0) {
             throw new Exception("FAILURE: You start with a score");
         }
+        testConstructor++;
 
     }
 
@@ -60,31 +70,51 @@ public class TestException {
                 }
             }
         }
+        testCollisionLivesScore++;
     }
 
     public static void testReactTickSpikeBalloon(SpikeGame oldSpikeGame, SpikeGame newSpikeGame, CharKey rnb) throws Exception {
         int dw = 0;
         if (rnb.isRightArrow()) {
             dw = 1;
-        } else if (rnb.isLeftArrow()) {
+        }
+        if (rnb.isLeftArrow()) {
             dw = -1;
         }
-        if ((oldSpikeGame.spike.width + dw) != newSpikeGame.spike.width) {
-            throw new Exception("MoveSpike doesn't work");
+        
+        if (oldSpikeGame.spike.isEqualTo(newSpikeGame.spike)) {
+            dw = 0;
         }
+        
+        if ((oldSpikeGame.spike.width + dw) != newSpikeGame.spike.width) {
+            if (oldSpikeGame.spike.width == newSpikeGame.spike.width && 
+                    (((oldSpikeGame.spike.width == 78) && dw == 1)
+                    || (oldSpikeGame.spike.width == 0 && dw == -1))) {
+                // this is okay because it shouldn't go off screen --> width 
+                // should stay the same
+            } else {
+                // But if it's just staying on screen, then PROBLEM
+                     throw new Exception("MoveSpike doesn't work: Old: " + 
+                             oldSpikeGame.spike.width + "New:" + newSpikeGame.spike.width + 
+                             "dw = " + dw);
+            }
+        }
+        
         if (dw != 0) {
             for (Balloon b : oldSpikeGame.balloonDataStruct) {
                 boolean found = false;
                 for (Balloon nb : newSpikeGame.balloonDataStruct) {
                     if (b.identity == nb.identity) {
                         if ((b.height - 1) != nb.height) {
-                            throw new Exception("Balloons don't move up! " + b.height);
+                            throw new Exception("Balloons don't move up! B: " + b.height + 
+                                    " NB: " + nb.height + "ID: " + nb.identity + " Key: " + rnb);
                         } else {
                             found = true;
                             break;
                         }
                     }
                 }
+                
                 if (!found && (b.height - 1 != 0)) {
                     throw new Exception("The new balloon was not found at");
                 }
@@ -93,9 +123,11 @@ public class TestException {
                 }
             }
         }
+        
+        testReactTickSpikeBalloon++;
     }
 
-    public static void testAdded(SpikeGame oldSpikeGame, SpikeGame newSpikeGame) throws Exception {
+    public static void testAdded(SpikeGame oldSpikeGame, SpikeGame newSpikeGame, CharKey rnb) throws Exception {
         int unMatched = 0;
         boolean newBalloon = false;
         // Checking whether something is added 
@@ -111,12 +143,16 @@ public class TestException {
             if (! oldBalloon ) {
                newBalloon = true;
             }
-            
         }
         
-        if (! newBalloon) {
+        if (! newBalloon && rnb.isLeftArrow() && rnb.isRightArrow()) {
                throw new Exception("The new Balloon was not added");
             }
+        
+         if (newBalloon && !rnb.isLeftArrow() && !rnb.isRightArrow()) {
+               throw new Exception("A new Balloon was added, but the spike didn't move");
+            }
+        testAdded++;
     }
         
 }
