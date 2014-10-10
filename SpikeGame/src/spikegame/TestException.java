@@ -61,7 +61,8 @@ public class TestException {
     public static void testCollisionLivesScore(SpikeGame oldSpikeGame, SpikeGame newSpikeGame) throws Exception {
         boolean collision = false;
         for (Balloon b : oldSpikeGame.balloonDataStruct) {
-            if (b.height == newSpikeGame.spike.height) {
+            // It's colliding or about to collide
+            if (b.height == newSpikeGame.spike.height || b.height - 1 == newSpikeGame.spike.height) {
                 // ONE OF THESE THINGS ARE TRUE
                 collision = true;
                 if (((oldSpikeGame.livesLabel.lives - 1) == newSpikeGame.livesLabel.lives)
@@ -76,7 +77,7 @@ public class TestException {
         // PROBLEM
             if (!collision) {
                 if (!oldSpikeGame.isEqualToLiScGo(newSpikeGame)) {
-                throw new Exception("ERROR! Lives & Score & Collision Equality Messed Up" + oldSpikeGame.scoreLabel.score + " = " + newSpikeGame.scoreLabel.score + " " + 
+                throw new Exception("If there is not a collision with the top of the screen, then the lives and score should stay the same" + oldSpikeGame.scoreLabel.score + " = " + newSpikeGame.scoreLabel.score + " " + 
                         oldSpikeGame.livesLabel.lives + " = " + newSpikeGame.livesLabel.lives);
             }
                 
@@ -101,13 +102,16 @@ public class TestException {
                 newBalloon = true;
             }
         }
-
+        
+// WORKING
         if (!newBalloon && !oldSpikeGame.spike.isEqualTo(newSpikeGame.spike)) {
-            throw new Exception("The new Balloon was not added");
+            throw new Exception("A new Balloon wasn't added so the old spike should equal "
+                    + "the new spike, so if it doesn't then crash"
+                     + oldSpikeGame.spike.width + " = " + newSpikeGame.spike.width);
         }
 
         if (newBalloon && oldSpikeGame.spike.isEqualTo(newSpikeGame.spike)) {
-            throw new Exception("A new Balloon was added, but the spike didn't move");
+            throw new Exception("A new Balloon was added, but the spike didn't move" + oldSpikeGame.spike.width + " = " + newSpikeGame.spike.width);
         }
         testAdded++;
     }

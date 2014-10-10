@@ -28,7 +28,7 @@ public class SpikeGameRun {
                   spikeGame.draw(s);
                   CharKey k = s.inkey();
                   SpikeGame newSpikeGame = spikeGame.reactAndTick(k);
-                  testReactTickSpikeBalloon(spikeGame, newSpikeGame,k);
+                  spikeGame.verifyInvariants(newSpikeGame,k);
                   spikeGame = newSpikeGame;
             }
             // Set up final view
