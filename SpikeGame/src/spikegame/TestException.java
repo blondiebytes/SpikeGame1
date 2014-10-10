@@ -84,17 +84,18 @@ public class TestException {
                         oldBalloon = true;
                    }
             }
-            
-            if (! oldBalloon ) {
+      // PROBLEM      
+            if (! oldBalloon) {
                newBalloon = true;
             }
+            
         }
         
-        if (! newBalloon && rnb.isLeftArrow() && rnb.isRightArrow()) {
+        if (!newBalloon && !oldSpikeGame.spike.isEqualTo(newSpikeGame.spike)) {
                throw new Exception("The new Balloon was not added");
             }
         
-         if (newBalloon && !rnb.isLeftArrow() && !rnb.isRightArrow()) {
+         if (newBalloon && oldSpikeGame.spike.isEqualTo(newSpikeGame.spike)) {
                throw new Exception("A new Balloon was added, but the spike didn't move");
             }
         testAdded++;
@@ -115,17 +116,9 @@ public class TestException {
         }
         
         if ((oldSpikeGame.spike.width + dw) != newSpikeGame.spike.width) {
-            if (oldSpikeGame.spike.width == newSpikeGame.spike.width && 
-                    (((oldSpikeGame.spike.width == 78) && dw == 1)
-                    || (oldSpikeGame.spike.width == 0 && dw == -1))) {
-                // this is okay because it shouldn't go off screen --> width 
-                // should stay the same
-            } else {
-                // But if it's just staying on screen, then PROBLEM
                      throw new Exception("MoveSpike doesn't work: Old: " + 
                              oldSpikeGame.spike.width + "New:" + newSpikeGame.spike.width + 
                              "dw = " + dw);
-            }
         }
         
         if (dw != 0) {
@@ -133,6 +126,7 @@ public class TestException {
                 boolean found = false;
                 for (Balloon nb : newSpikeGame.balloonDataStruct) {
                     if (b.identity == nb.identity) {
+                        // the b.height - 1 should equal the new height
                         if ((b.height - 1) != nb.height) {
                             throw new Exception("Balloons don't move up! B: " + b.height + 
                                     " NB: " + nb.height + "ID: " + nb.identity + " Key: " + rnb);
@@ -144,10 +138,22 @@ public class TestException {
                 }
                 
                 if (!found && (b.height - 1 != 0)) {
-                    throw new Exception("The new balloon was not found at");
+                    throw new Exception("The new balloon was not found at" + b.height);
                 }
                 if (found && (b.height - 1) == 0) {
-                    throw new Exception("The removed balloon was found?");
+                    throw new Exception("The removed balloon was found? " + b.height);
+                }
+            }
+        } else {
+            for (Balloon b : oldSpikeGame.balloonDataStruct) {
+                for (Balloon nb : newSpikeGame.balloonDataStruct) {
+                    if (b.identity == nb.identity) {
+                        if (b.height != nb.height ) {
+                            throw new Exception ("Balloons move up and the spike didn't move");
+                        }
+                    } else {
+                        break;
+                    }
                 }
             }
         }

@@ -10,7 +10,6 @@ import static spikegame.TestException.checkGameOverLives;
 import static spikegame.TestException.checkIfPositiveScore;
 import static spikegame.TestException.testAdded;
 import static spikegame.TestException.testCollisionLivesScore;
-import static spikegame.TestException.testConstructor;
 import static spikegame.TestException.testReactTickSpikeBalloon;
 
 public class SpikeGame {
