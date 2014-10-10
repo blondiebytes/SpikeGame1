@@ -46,7 +46,7 @@ public class TestException {
                 throw new Exception("0 Lives & gameNotOver");
             }
             if (nSG.gameOver) {
-                if (nSG.livesLabel.lives != 0) {
+                if (nSG.livesLabel.lives != 0 || oSG.livesLabel.lives != 1) {
                     throw new Exception("Still have lives & gameOver");
                 }
             } else {
